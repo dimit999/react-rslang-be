@@ -78,7 +78,7 @@ app.use((req, res, next) => next(createError(NOT_FOUND)));
 
 app.use(errorHandler);
 
-app.use('/', loader.single('avatar'), async (req, res) => {
+app.post('/', loader.single('avatar'), async (req, res) => {
   try {
     const result = await cloudinary.uploader.upload(req.file.path);
     res.send(result);
