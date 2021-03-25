@@ -88,14 +88,4 @@ app.use((req, res, next) => next(createError(NOT_FOUND)));
 
 app.use(errorHandler);
 
-app.post('/sendImage', loader.single('avatar'), async (req, res) => {
-  try {
-    const result = await cloudinary.uploader.upload(req.file.path);
-    res.send(result);
-  } catch (error) {
-    res.send(error);
-  }
-  fs.unlink(req.file.path);
-});
-
 module.exports = app;
