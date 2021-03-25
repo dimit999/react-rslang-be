@@ -38,15 +38,15 @@ app.use(express.json());
 
 app.use('/files', express.static(path.join(__dirname, '../files')));
 
-// app.post('/sendImage', loader.single('avatar'), async (req, res) => {
-//   try {
-//     const result = await cloudinary.uploader.upload(req.file.path);
-//     res.send(result);
-//   } catch (error) {
-//     res.send(error);
-//   }
-//   fs.unlink(req.file.path);
-// });
+app.post('/sendImage', loader.single('avatar'), async (req, res) => {
+  try {
+    const result = await cloudinary.uploader.upload(req.file.path);
+    res.send(result);
+  } catch (error) {
+    res.send(error);
+  }
+  // fs.unlink(req.file.path);
+});
 
 app.use(checkAuthentication);
 
