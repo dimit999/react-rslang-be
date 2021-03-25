@@ -2,7 +2,7 @@
 require('express-async-errors');
 const express = require('express');
 require('dotenv').config();
-const cloudinary = require('cloudinary').v2;
+// const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 const fs = require('fs/promises');
 const createError = require('http-errors');
