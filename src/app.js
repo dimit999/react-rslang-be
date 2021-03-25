@@ -37,6 +37,16 @@ app.use(express.json());
 
 app.use('/files', express.static(path.join(__dirname, '../files')));
 
+app.post('/sendImage', loader.single('avatar'), async (req, res) => {
+  try {
+    const result = await cloudinary.uploader.upload(req.file.path);
+    res.send(result);
+  } catch (error) {
+    res.send(error);
+  }
+  fs.unlink(req.file.path);
+});
+
 app.use(checkAuthentication);
 
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
@@ -78,14 +88,19 @@ app.use((req, res, next) => next(createError(NOT_FOUND)));
 
 app.use(errorHandler);
 
-app.post('/sendImage', loader.single('avatar'), async (req, res) => {
-  try {
-    const result = await cloudinary.uploader.upload(req.file.path);
-    res.send(result);
-  } catch (error) {
-    res.send(error);
-  }
-  fs.unlink(req.file.path);
-});
+// app.post('/sendImage', loader.single('avatar'), async (req, res) => {
+//   try {
+//     cloudinary.config({
+//       cloud_name: 'dwmhrenql',
+//       api_key: '795816532847219',
+//       api_secret: 'N9wsDUqMb4KU9Ki4x6E4Znb273k'
+//     });
+//     const result = await cloudinary.uploader.upload(req.file.path);
+//     res.send(result);
+//   } catch (error) {
+//     res.send(error);
+//   }
+//   fs.unlink(req.file.path);
+// });
 
 module.exports = app;
