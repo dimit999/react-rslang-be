@@ -22,8 +22,13 @@ const settingRouter = require('./resources/settings/setting.router');
 const errorHandler = require('./errors/errorHandler');
 const checkAuthentication = require('./resources/authentication/checkAuthentication');
 const { userIdValidator } = require('./utils/validation/validator');
+require('dotenv').config();
+const cloudinary = require('cloudinary').v2;
+const multer = require('multer');
+const fs = require('fs/promises');
 
 const app = express();
+const loader = multer({ dest: path.join(__dirname, 'tmp') });
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
 app.use(helmet());
@@ -31,6 +36,16 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/files', express.static(path.join(__dirname, '../files')));
+
+app.post('/sendImage', loader.single('avatar'), async (req, res) => {
+  try {
+    const result = await cloudinary.uploader.upload(req.file.path);
+    res.send(result);
+  } catch (error) {
+    res.send(error);
+  }
+  fs.unlink(req.file.path);
+});
 
 app.use(checkAuthentication);
 
@@ -72,5 +87,15 @@ userRouter.use('/:id/settings', userIdValidator, settingRouter);
 app.use((req, res, next) => next(createError(NOT_FOUND)));
 
 app.use(errorHandler);
+
+app.post('/sendImage', loader.single('avatar'), async (req, res) => {
+  try {
+    const result = await cloudinary.uploader.upload(req.file.path);
+    res.send(result);
+  } catch (error) {
+    res.send(error);
+  }
+  fs.unlink(req.file.path);
+});
 
 module.exports = app;
