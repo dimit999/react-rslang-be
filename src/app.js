@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 require('express-async-errors');
 const express = require('express');
-// require('dotenv').config();
-// const cloudinary = require('cloudinary').v2;
-// const multer = require('multer');
+require('dotenv').config();
+const cloudinary = require('cloudinary').v2;
+const multer = require('multer');
 // const fs = require('fs/promises');
 const createError = require('http-errors');
 const swaggerUI = require('swagger-ui-express');
@@ -29,7 +29,7 @@ const checkAuthentication = require('./resources/authentication/checkAuthenticat
 const { userIdValidator } = require('./utils/validation/validator');
 
 const app = express();
-// const loader = multer({ dest: path.join(__dirname, 'tmp') });
+const loader = multer({ dest: path.join(__dirname, 'tmp') });
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
 app.use(helmet());
