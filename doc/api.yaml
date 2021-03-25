@@ -89,6 +89,47 @@ components:
           type: string
         name:
           type: string
+    Image:
+      type: object
+      properties:
+        asset_id:
+          type: string
+        public_id:
+          type: string
+        version:
+          type: number
+        version_id:
+          type: string
+        signature:
+          type: string
+        width:
+          type: number
+        height:
+          type: number
+        format:
+          type: string
+        resource_type:
+          type: string
+        created_at:
+          type: string
+        tags:
+          type: object
+        bytes:
+          type: number
+        type:
+          type: object
+        etag:
+          type: number
+        placeholder:
+          type: boolean
+        url:
+          type: number
+        secure_url:
+          type: boolean
+        access_mode:
+          type: number
+        original_filename:
+          type: boolean
   responses:
     UnauthorizedError:
       description: Access token is missing or invalid
@@ -625,3 +666,32 @@ paths:
                 $ref: "#/components/schemas/Auth"
         403:
           description: Incorrect e-mail or password
+  /sendImage:
+  post:
+    tags:
+      - Send image
+    security:
+      []
+    summary: Send image
+    description: Send image
+    requestBody:
+      required: true
+      content:
+        multipart/formdata:
+          schema:
+            type: object
+            title: example
+            properties:
+              filePath:
+                type: string
+                description: file path
+    responses:
+      200:
+        description: Image was sent.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Image"
+      403:
+        description: Cloudinary issue
+
