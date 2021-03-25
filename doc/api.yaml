@@ -693,5 +693,5 @@ paths:
             schema:
               $ref: "#/components/schemas/Image"
       403:
-        description: Cloudinary issue
+        description: Cloudinary issue!
 
