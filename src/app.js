@@ -22,8 +22,13 @@ const settingRouter = require('./resources/settings/setting.router');
 const errorHandler = require('./errors/errorHandler');
 const checkAuthentication = require('./resources/authentication/checkAuthentication');
 const { userIdValidator } = require('./utils/validation/validator');
+require('dotenv').config();
+const cloudinary = require('cloudinary').v2;
+const multer = require('multer');
+const fs = require('fs/promises');
 
 const app = express();
+const loader = multer({ dest: path.join(__dirname, 'tmp') });
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
 app.use(helmet());
