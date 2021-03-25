@@ -1,6 +1,10 @@
 /* eslint-disable no-unused-vars */
 require('express-async-errors');
 const express = require('express');
+require('dotenv').config();
+const cloudinary = require('cloudinary').v2;
+const multer = require('multer');
+const fs = require('fs/promises');
 const createError = require('http-errors');
 const swaggerUI = require('swagger-ui-express');
 const path = require('path');
@@ -23,10 +27,6 @@ const settingRouter = require('./resources/settings/setting.router');
 const errorHandler = require('./errors/errorHandler');
 const checkAuthentication = require('./resources/authentication/checkAuthentication');
 const { userIdValidator } = require('./utils/validation/validator');
-require('dotenv').config();
-const cloudinary = require('cloudinary').v2;
-const multer = require('multer');
-const fs = require('fs/promises');
 
 const app = express();
 const loader = multer({ dest: path.join(__dirname, 'tmp') });
