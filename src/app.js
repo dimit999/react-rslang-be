@@ -4,7 +4,7 @@ const express = require('express');
 require('dotenv').config();
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
-const fs = require('fs').promises;
+// const fs = require('fs').promises;
 const createError = require('http-errors');
 const swaggerUI = require('swagger-ui-express');
 const path = require('path');
@@ -47,7 +47,7 @@ app.post('/sendImage', loader.single('avatar'), async (req, res) => {
   } catch (error) {
     res.send(error);
   }
-  fs.unlink(req.file.path);
+  // fs.unlink(req.file.path);
 });
 
 app.use(checkAuthentication);
